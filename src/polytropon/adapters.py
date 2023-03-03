@@ -15,6 +15,9 @@ EPS = 1e-12
 
 
 class SkilledModule(nn.Module):
+    '''
+    为技能网络分配编号，包裹模块
+    '''
     def __init__(self):
         super().__init__()
         self._task_ids = None
@@ -31,6 +34,7 @@ class SkilledModule(nn.Module):
 class HyperLoRALinear(SkilledModule):
     """ Applies a linear function parameterised by a base bias
     and a weighted average of base and task-conditioned weights
+    任务感知网络，用来调整技能任务权重？
     """
     __constants__ = ['in_features', 'out_features']
     in_features: int
@@ -174,6 +178,7 @@ class SkilledLoRALinear(SkilledModule):
 class SkilledLTSFTLinear(SkilledModule):
     """ Applies a linear function parameterised by a base bias
     and a weighted average of base and skill weights
+    
     """
     __constants__ = ['in_features', 'out_features']
     in_features: int
