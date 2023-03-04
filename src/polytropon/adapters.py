@@ -1,3 +1,8 @@
+#! usr/bin python
+'''
+This file provides two way of parameter-efficient implementations of $\Phi$. 
+a matrix of $\phi$ is of skill-specific parameters for a given neural architecture, which are composed according to the active skills.
+'''
 import math
 import random
 import itertools
@@ -16,7 +21,7 @@ EPS = 1e-12
 
 class SkilledModule(nn.Module):
     '''
-    为技能网络分配编号，包裹模块
+    attribute an index to each task 
     '''
     def __init__(self):
         super().__init__()
@@ -34,7 +39,7 @@ class SkilledModule(nn.Module):
 class HyperLoRALinear(SkilledModule):
     """ Applies a linear function parameterised by a base bias
     and a weighted average of base and task-conditioned weights
-    任务感知网络，用来调整技能任务权重？
+    
     """
     __constants__ = ['in_features', 'out_features']
     in_features: int
@@ -101,6 +106,8 @@ class HyperLoRALinear(SkilledModule):
 class SkilledLoRALinear(SkilledModule):
     """ Applies a linear function parameterised by a base bias
     and a weighted average of base and skill weights
+    
+    Low-Rank approximation
     """
     __constants__ = ['in_features', 'out_features']
     in_features: int
@@ -179,6 +186,7 @@ class SkilledLTSFTLinear(SkilledModule):
     """ Applies a linear function parameterised by a base bias
     and a weighted average of base and skill weights
     
+    Sparse approximation of lottery ticket sparse fine-tuning
     """
     __constants__ = ['in_features', 'out_features']
     in_features: int
