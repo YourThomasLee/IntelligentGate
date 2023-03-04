@@ -1,4 +1,10 @@
+#! usr/bin python
+#-*- encoding: utf-8 -*-
+"""
+This file is to replace existing linear projection layers or attention layers to adapter layers
+"""
 from torch import nn
+
 
 
 ATTENTION_LINEARS = ["k_proj", "v_proj", "q_proj", "out_proj", "k", "v", "q", "o"]
