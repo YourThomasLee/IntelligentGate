@@ -46,7 +46,9 @@ class SkilledMixin(nn.Module):
 
         adapter_class, only_attention = VARIANT2CLASS.get(skilled_variant, (SkilledLoRALinear, True))
         self.adapter_class = adapter_class
+        # initialization of skills' matrix
         skills = self.get_skills(custom_skills)
+        # substitute original layers for adapters
         replace_layers(self.model, adapter_class, n_tasks, n_skills, skills, only_attention=only_attention)
 
         if state_dict is not None:
@@ -77,6 +79,7 @@ class SkilledMixin(nn.Module):
         outputs = self.model.forward(*args, **kwargs)
 
         if self.training and self.skilled_variant == "learned" and add_prior:
+        # add allocation loss
             aux_loss = [self.neg_log_IBP(p) for n, p in self.model.named_parameters() if "skill_logits" in n]
             outputs.loss += torch.stack(aux_loss).sum()
 
