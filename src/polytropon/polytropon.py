@@ -75,6 +75,7 @@ class SkilledMixin(nn.Module):
         return self.model.generate(*args, **kwargs)
 
     def forward(self, task_ids, *args, add_prior=False, **kwargs):
+        # attribute task_ids to modules, where task_ids is a torchTensor, for instance torch.LongTensor([0, 1])
         inform_layers(self.model, self.adapter_class, task_ids)
         outputs = self.model.forward(*args, **kwargs)
 
