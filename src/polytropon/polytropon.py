@@ -1,3 +1,5 @@
+#! usr/bin python
+#-*- encoding: utf-8 -*-
 import logging
 import math
 from scipy import special
@@ -16,8 +18,8 @@ from .utils import replace_layers, inform_layers
 logger = logging.getLogger(__name__)
 
 VARIANT2CLASS = {
-    "hyperformer": (HyperLoRALinear, True),
-    "sparse": (SkilledLTSFTLinear, False),
+    "hyperformer": (HyperLoRALinear, True), # Lottery ticket fine-tuning is just for attention
+    "sparse": (SkilledLTSFTLinear, False), # low rank approximation can be applied to linear projection and attention layers
 }
 
 
